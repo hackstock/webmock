@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hackstock/webmock/pkg/api"
+	"github.com/hackstock/webmock/pkg/parsing"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )
@@ -33,6 +35,11 @@ func main() {
 		log.Fatalf("failed initializing logger : %v", err)
 	}
 
+	endpoints, err := parsing.ParseEndpoints(viper.GetString("WEBMOCK_ENDPOINT_DEFINITIONS"))
+	if err != nil {
+		logger.Fatal("failed parsing endpoints definitions", zap.Error(err))
+	}
+	fmt.Println(endpoints)
 	router := gin.Default()
 	server := api.NewServer(router, logger)
 	port := viper.GetInt("WEBMOCK_SERVER_PORT")
