@@ -3,7 +3,10 @@ package main
 import (
 	"log"
 
+	"github.com/gin-gonic/gin"
+	"github.com/hackstock/webmock/pkg/api"
 	"github.com/spf13/viper"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -23,5 +26,18 @@ func main() {
 		} else {
 			log.Fatalf("failed processing config file : %v", err)
 		}
+	}
+
+	logger, err := zap.NewProduction()
+	if err != nil {
+		log.Fatalf("failed initializing logger : %v", err)
+	}
+
+	router := gin.Default()
+	server := api.NewServer(router, logger)
+	port := viper.GetInt("WEBMOCK_SERVER_PORT")
+	err = server.Run(port)
+	if err != nil {
+		logger.Fatal("failed starting server", zap.Int("port", port))
 	}
 }

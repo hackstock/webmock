@@ -17,3 +17,6 @@
 # Webmock config files
 config.json
 endpoints.json
+
+# Mac OS files
+.DS_Store
