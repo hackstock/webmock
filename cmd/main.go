@@ -42,6 +42,7 @@ func main() {
 
 	router := gin.Default()
 	server := api.NewServer(router, endpoints, logger)
+
 	port := viper.GetInt("WEBMOCK_SERVER_PORT")
 	err = server.Run(port)
 	if err != nil {

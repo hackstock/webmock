@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hackstock/webmock/pkg/parsing"
@@ -27,7 +28,11 @@ func (s *Server) Run(port int) error {
 		requestPath := ctx.Param("path")
 
 		if endpoint, found := s.endpoints[fmt.Sprintf("/%s", requestPath)]; found {
-			ctx.JSON(endpoint.StatusCode, endpoint.Response)
+			if ctx.Request.Method == endpoint.HTTPMethod {
+				ctx.JSON(endpoint.StatusCode, endpoint.Response)
+			} else {
+				ctx.Status(http.StatusNotFound)
+			}
 		}
 
 	})
