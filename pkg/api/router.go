@@ -19,8 +19,10 @@ func InitRoutes(endpoints map[string]parsing.Endpoint, logger *zap.Logger) *gin.
 			if ctx.Request.Method == endpoint.HTTPMethod {
 				ctx.JSON(endpoint.StatusCode, endpoint.Response)
 			} else {
-				ctx.Status(http.StatusNotFound)
+				// TODO : Add handling for other HTTP methods
 			}
+		} else {
+			ctx.Status(http.StatusNotFound)
 		}
 
 	})
