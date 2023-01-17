@@ -1,0 +1,20 @@
+{
+    "endpoints": [
+        {
+            "url": "/foo",
+            "method": "GET",
+            "statusCode": 200,
+            "response": {
+                "key": "foo"
+            }
+        },
+        {
+            "url": "/bar",
+            "method": "GET",
+            "statusCode": 200,
+            "response": {
+                "key": "bar"
+            }
+        }
+    ]
+}

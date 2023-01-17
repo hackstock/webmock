@@ -12,7 +12,7 @@ import (
 )
 
 func Test_Router(t *testing.T) {
-	endpoints, err := parsing.ParseEndpoints("./testdata/endpoints.json")
+	endpoints, err := parsing.ParseEndpoints("./testdata/test_endpoints.json")
 	assert.NoError(t, err)
 
 	logger := zap.NewExample()
