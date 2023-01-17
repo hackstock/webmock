@@ -4,10 +4,18 @@ env:
   BINARY_NAME: webmock
 
 jobs:
-  lint-and-test:
+  linting:
     runs-on: ubuntu-latest
     steps:
-      - name: echo a string
-        run: echo "Hello CI-CD"
-      - name: check go version
-        run: go version
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Format Code
+        run: if [ "$(gofmt -s -l . | wc -l)" -gt 0 ]; then exit 1; fi
+  unit-testing:
+    runs-on: ubuntu-latest
+    needs: [linting]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: "Run Unit Tests"
+        run: go test ./...
