@@ -9,7 +9,5 @@ jobs:
     steps:
       - name: echo a string
         run: echo "Hello CI-CD"
-      - name: check runtime versions
-        run: |
-          node -v
-          npm -v
+      - name: check go version
+        run: go version
